@@ -4,14 +4,12 @@
 require 'csv'     
 require 'rubygems'   
 
-class MovieData
+class JSONData
                      
     @@URI_ROOT = "http://192.168.1.102/video"
     
     def initialize keys , values  
-           #values is type of Array
            @values = values         
-          # @keys = "Genre,Title,Poster,Cast,Director,Storyline,Release Date,Country,Series"   
            @keys = keys
            if(@values.size != @keys.size)
               puts "ERROR: values number should match key numbers "          
@@ -30,16 +28,17 @@ class MovieData
               #value = @values.split(",")[index].strip      
               #ingore the suffix
               value = @values[index].strip   
-                                               
-              if(key.casecmp("Filename").zero? )
-                 value = @@URI_ROOT + "/"+ value + ".mp4"
-              end        
+                                
+	      #disable post processsing	               
+              #if(key.casecmp("Filename").zero? )
+              #   value = @@URI_ROOT + "/"+ value + ".mp4"
+              #end        
               
-              if(key.casecmp("poster").zero?)
-                 value = @@URI_ROOT + "/" + value + ".jpg"
-              end
-              #if the key is either poster or filename , add the URI root
-              json << "#{qoto(key)}:#{qoto(value)}"   
+              #if(key.casecmp("poster").zero?)
+              #   value = @@URI_ROOT + "/" + value + ".jpg"
+              #end
+              
+		json << "#{qoto(key)}:#{qoto(value)}"   
               json << ",\n"  unless index == ( @keyNums-1)
       end   
       
@@ -70,7 +69,7 @@ def convert_csv_to_json csv_file, out_json
                   rows.each_with_index do |line, index|
                         if (index != 0)                 
                         #puts "process one line #{index} #{line}"
-                        f << MovieData.new(key, line).toJson 
+                        f << JSONData.new(key, line).toJson 
                         f << ",\n\n" unless index == (rows.size - 1)
                       end
                     
