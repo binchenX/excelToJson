@@ -1,0 +1,17 @@
+Non-technical people like excel but the technical person and the Internet like JSON. This scrip bridge the gaps. 
+It can convert an csv file (save as .csv for an excel document) containing GB2312 encoding character to an UTF-8 encoded JSON file.
+
+Usage:
+./toJson xxx.csv
+Output: xxx.json
+
+
+
+MORE:
+1.The first row will be the keys of json object
+
+Containts:
+1. Hardcode for post-processing certain fields , e.g: FileName
+   Suppose the value in original csv file is "index.jpg" ,the json value will be "${ROOT_URI}/index.jpg"
+
+   This is a useful feature and you can modify it to suit your needs.
